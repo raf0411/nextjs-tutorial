@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { UpdateInvoice, DeleteInvoice } from "@/app/ui/invoices/buttons";
+import { UpdateInvoice, DeleteInvoice, DownloadPDF } from "@/app/ui/invoices/buttons";
 import InvoiceStatus from "@/app/ui/invoices/status";
 import { formatDateToLocal, formatCurrency } from "@/app/lib/utils";
 import { fetchFilteredInvoices } from "@/app/lib/data";
@@ -44,11 +44,6 @@ export default async function InvoicesTable({
               <TableRow sx={{ borderBottom: "2px solid #444444" }}>
                 <TableCell>
                   <Typography variant="subtitle1" fontWeight="bold" color="#D9D9D9">
-                    Select
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle1" fontWeight="bold" color="#D9D9D9">
                     Customer
                   </Typography>
                 </TableCell>
@@ -82,11 +77,6 @@ export default async function InvoicesTable({
             <TableBody>
               {invoices?.map((invoice) => (
                 <TableRow key={invoice.id} sx={{ borderBottom: "2px solid #444444" }}>
-                  <TableCell>
-                    <Checkbox sx={{
-                      color: 'white'
-                    }} />
-                  </TableCell>
                   <TableCell>
                     <Box display="flex" alignItems="center">
                       <Image
@@ -123,6 +113,7 @@ export default async function InvoicesTable({
                     <Box display="flex" justifyContent="end" gap={1}>
                       <UpdateInvoice id={invoice.id} />
                       <DeleteInvoice id={invoice.id} />
+                      <DownloadPDF invoice={invoice} />
                     </Box>
                   </TableCell>
                 </TableRow>

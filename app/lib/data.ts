@@ -182,6 +182,7 @@ export async function fetchInvoiceById(id: string) {
       SELECT
         invoices.id,
         invoices.customer_id,
+        invoices.date,
         invoices.amount,
         invoices.status
       FROM invoices
@@ -192,7 +193,7 @@ export async function fetchInvoiceById(id: string) {
       ...invoice,
       amount: invoice.amount / 100,
     }));
-    console.log(invoice);
+
     return invoice[0];
   } catch (error) {
     console.error('Database Error:', error);

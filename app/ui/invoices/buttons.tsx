@@ -1,8 +1,12 @@
-import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
+'use client';
+
+import { PencilIcon, PlusIcon, TrashIcon, ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { deleteInvoice } from "@/app/lib/actions";
 import { Button, IconButton } from "@mui/material";
 import { deleteSelectedInvoices } from "@/app/lib/actions";
+import { Invoice } from "@/app/lib/definitions";
+import { generateInvoice } from "@/app/lib/generateInvoice";
 
 export function CreateInvoice() {
   return (
@@ -71,7 +75,32 @@ export function DeleteInvoice({ id }: { id: string }) {
   );
 }
 
-export function DeleteSelectedInvoices({ selectedIds }: { selectedIds: string[] }) {
+export function DownloadPDF({ invoice }: { invoice: Invoice }) {
+  const handleDownloadPDF = () => {
+    generateInvoice(invoice);
+  }
+
+  return (
+    <IconButton
+      onClick={handleDownloadPDF}
+      sx={{
+        borderRadius: "8px",
+        border: "1px solid rgba(0, 0, 0, 0.12)",
+        p: "6px",
+        "&:hover": { backgroundColor: "#ff9248" },
+        background: "orange",
+      }}
+    >
+      <ArrowDownTrayIcon className="w-5" color="white" />
+    </IconButton>
+  );
+}
+
+export function DeleteSelectedInvoices({
+  selectedIds,
+}: {
+  selectedIds: string[];
+}) {
   const handleDelete = async () => {
     try {
       await deleteSelectedInvoices(selectedIds);
@@ -105,4 +134,3 @@ export function DeleteSelectedInvoices({ selectedIds }: { selectedIds: string[] 
     </Button>
   );
 }
-
