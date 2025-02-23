@@ -1,13 +1,19 @@
-import { GlobeAltIcon } from '@heroicons/react/24/outline';
-import { lusitana } from '@/app/ui/fonts';
+import { Public } from '@mui/icons-material';
+import { Typography, Box } from '@mui/material';
+import { montserrat } from '@/app/ui/fonts';
 
 export default function AcmeLogo() {
   return (
-    <div
-      className={`${lusitana.className} flex flex-row items-center leading-none text-white`}
+    <Box
+      className={montserrat.className}
+      display="flex"
+      alignItems="center"
+      color="white"
     >
-      <GlobeAltIcon className="h-12 w-12 rotate-[15deg]" />
-      <p className="text-[44px]">Acme</p>
-    </div>
+      <Public sx={{ fontSize: 40, transform: 'rotate(15deg)' }} />
+      <Typography variant="h3" fontWeight="bold" sx={{ fontSize: 32 }}>
+        Acme
+      </Typography>
+    </Box>
   );
 }

@@ -1,6 +1,5 @@
-import { clsx } from 'clsx';
-import Link from 'next/link';
-import { lusitana } from '@/app/ui/fonts';
+import { Breadcrumbs, Link, Typography } from "@mui/material";
+import { montserrat } from "@/app/ui/fonts";
 
 interface Breadcrumb {
   label: string;
@@ -8,29 +7,47 @@ interface Breadcrumb {
   active?: boolean;
 }
 
-export default function Breadcrumbs({
+export default function CustomBreadcrumbs({
   breadcrumbs,
 }: {
   breadcrumbs: Breadcrumb[];
 }) {
   return (
-    <nav aria-label="Breadcrumb" className="mb-6 block">
-      <ol className={clsx(lusitana.className, 'flex text-xl md:text-2xl')}>
-        {breadcrumbs.map((breadcrumb, index) => (
-          <li
-            key={breadcrumb.href}
-            aria-current={breadcrumb.active}
-            className={clsx(
-              breadcrumb.active ? 'text-gray-900' : 'text-gray-500',
-            )}
-          >
-            <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
-            {index < breadcrumbs.length - 1 ? (
-              <span className="mx-3 inline-block">/</span>
-            ) : null}
-          </li>
-        ))}
-      </ol>
+    <nav aria-label="breadcrumb" className={montserrat.className}>
+      <Breadcrumbs
+        separator=" / "
+        sx={{
+          fontSize: { xs: "1.25rem", md: "1.5rem" },
+          mb: 3,
+          "& .MuiBreadcrumbs-separator": {
+            color: "#D9D9D9", // Set separator color
+          },
+        }}
+      >
+        {breadcrumbs.map((breadcrumb) =>
+          breadcrumb.active ? (
+            <Typography
+              key={breadcrumb.href}
+              color="#D9D9D9"
+              sx={{ fontSize: { xs: "1.25rem", md: "1.5rem" } }}
+            >
+              {breadcrumb.label}
+            </Typography>
+          ) : (
+            <Link
+              key={breadcrumb.href}
+              href={breadcrumb.href}
+              color="#D9D9D9"
+              sx={{
+                textDecoration: "none",
+                fontSize: { xs: "1.25rem", md: "1.5rem" },
+              }}
+            >
+              {breadcrumb.label}
+            </Link>
+          )
+        )}
+      </Breadcrumbs>
     </nav>
   );
 }

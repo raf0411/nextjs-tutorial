@@ -17,15 +17,12 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
     return `${pathname}?${params.toString()}`;
   };
 
-  // NOTE: Uncomment this code in Chapter 11
 
-  // const allPages = generatePagination(currentPage, totalPages);
+  const allPages = generatePagination(currentPage, totalPages);
 
   return (
     <>
-      {/*  NOTE: Uncomment this code in Chapter 11 */}
-
-      {/* <div className="inline-flex">
+      <div className="inline-flex">
         <PaginationArrow
           direction="left"
           href={createPageURL(currentPage - 1)}
@@ -58,7 +55,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
           href={createPageURL(currentPage + 1)}
           isDisabled={currentPage >= totalPages}
         />
-      </div> */}
+      </div>
     </>
   );
 }
@@ -75,13 +72,13 @@ function PaginationNumber({
   isActive: boolean;
 }) {
   const className = clsx(
-    'flex h-10 w-10 items-center justify-center text-sm border',
+    'flex h-10 w-10 items-center justify-center text-sm border bg-[#232323]',
     {
       'rounded-l-md': position === 'first' || position === 'single',
       'rounded-r-md': position === 'last' || position === 'single',
-      'z-10 bg-blue-600 border-blue-600 text-white': isActive,
-      'hover:bg-gray-100': !isActive && position !== 'middle',
-      'text-gray-300': position === 'middle',
+      'z-10 bg-[#7A7A7A] border-[#D9D9D9] text-[#D9D9D9] font-bold': isActive,
+      'hover:bg-[#7A7A7A] hover:font-bold': !isActive && position !== 'middle',
+      'text-[#D9D9D9]': position === 'middle',
     },
   );
 
@@ -104,10 +101,10 @@ function PaginationArrow({
   isDisabled?: boolean;
 }) {
   const className = clsx(
-    'flex h-10 w-10 items-center justify-center rounded-md border',
+    'flex h-10 w-10 items-center justify-center rounded-md border bg-[#232323]',
     {
-      'pointer-events-none text-gray-300': isDisabled,
-      'hover:bg-gray-100': !isDisabled,
+      'pointer-events-none text-[#D9D9D9]': isDisabled,
+      'hover:bg-[#7A7A7A]': !isDisabled,
       'mr-2 md:mr-4': direction === 'left',
       'ml-2 md:ml-4': direction === 'right',
     },
