@@ -20,7 +20,7 @@ export default function CustomBreadcrumbs({
           fontSize: { xs: "1.25rem", md: "1.5rem" },
           mb: 3,
           "& .MuiBreadcrumbs-separator": {
-            color: "#D9D9D9", // Set separator color
+            color: "#D9D9D9", 
           },
         }}
       >
