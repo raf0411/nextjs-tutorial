@@ -3,6 +3,7 @@ import NavLinks from "@/app/ui/dashboard/nav-links";
 import AcmeLogo from "@/app/ui/acme-logo";
 import { PowerIcon } from "@heroicons/react/24/outline";
 import { Button, Box } from "@mui/material";
+import { signOut } from "@/auth";
 
 export default function SideNav() {
   return (
@@ -18,7 +19,12 @@ export default function SideNav() {
       <Box className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks />
         <Box className="hidden h-auto w-full grow rounded-md bg-[#232323] md:block"></Box>
-        <form>
+        <form
+          action={async () => {
+            "use server";
+            await signOut({ redirectTo: "/" });
+          }}
+        >
           <Button
             type="submit"
             className="!text-white flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md p-3 text-sm font-medium hover:!bg-[#b70202] hover:font-bold md:flex-none md:justify-start md:p-2 md:px-3 !bg-[#710000]"
