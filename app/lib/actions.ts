@@ -18,6 +18,17 @@ const FormSchema = z.object({
 
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
 
+
+export async function deleteSelectedInvoices(ids: string[]) {
+  try {
+    await sql`
+      DELETE FROM invoices WHERE id IN (${sql(ids)})
+    `;
+  } catch (error) {
+    console.error("Error deleting invoices:", error);
+  }
+}
+
 export async function createInvoice(formData: FormData) {
   const { customerId, amount, status } = CreateInvoice.parse({
     customerId: formData.get("customerId"),

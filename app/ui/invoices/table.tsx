@@ -2,7 +2,7 @@ import Image from "next/image";
 import { UpdateInvoice, DeleteInvoice } from "@/app/ui/invoices/buttons";
 import InvoiceStatus from "@/app/ui/invoices/status";
 import { formatDateToLocal, formatCurrency } from "@/app/lib/utils";
-import { fetchFilteredInvoices, fetchFilteredByStatusInvoices } from "@/app/lib/data";
+import { fetchFilteredInvoices } from "@/app/lib/data";
 import {
   Box,
   Container,
@@ -14,6 +14,7 @@ import {
   TableRow,
   Paper,
   Typography,
+  Checkbox
 } from "@mui/material";
 
 export default async function InvoicesTable({
@@ -41,6 +42,11 @@ export default async function InvoicesTable({
           <Table>
             <TableHead>
               <TableRow sx={{ borderBottom: "2px solid #444444" }}>
+                <TableCell>
+                  <Typography variant="subtitle1" fontWeight="bold" color="#D9D9D9">
+                    Select
+                  </Typography>
+                </TableCell>
                 <TableCell>
                   <Typography variant="subtitle1" fontWeight="bold" color="#D9D9D9">
                     Customer
@@ -76,6 +82,11 @@ export default async function InvoicesTable({
             <TableBody>
               {invoices?.map((invoice) => (
                 <TableRow key={invoice.id} sx={{ borderBottom: "2px solid #444444" }}>
+                  <TableCell>
+                    <Checkbox sx={{
+                      color: 'white'
+                    }} />
+                  </TableCell>
                   <TableCell>
                     <Box display="flex" alignItems="center">
                       <Image
