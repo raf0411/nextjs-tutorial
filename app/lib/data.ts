@@ -83,8 +83,16 @@ const ITEMS_PER_PAGE = 6;
 export async function fetchFilteredInvoices(
   query: string,
   currentPage: number,
+  sortBy?: string,
+  order: string = 'ASC',
 ) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  const orderDirection = order.toUpperCase() === 'DESC' ? sql`DESC` : sql`ASC`;
+
+  const orderByClause = sortBy
+    ? sql`ORDER BY ${sql([sortBy])} ${orderDirection}`
+    : sql`ORDER BY invoices.date ${orderDirection}`;
 
   try {
     const invoices = await sql<InvoicesTable[]>`
@@ -104,7 +112,7 @@ export async function fetchFilteredInvoices(
         invoices.amount::text ILIKE ${`%${query}%`} OR
         invoices.date::text ILIKE ${`%${query}%`} OR
         invoices.status ILIKE ${`%${query}%`}
-      ORDER BY invoices.date DESC
+      ${orderByClause}
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
@@ -114,6 +122,38 @@ export async function fetchFilteredInvoices(
     throw new Error('Failed to fetch invoices.');
   }
 }
+
+
+export async function fetchFilteredByStatusInvoices(
+  status: string,
+  currentPage: number
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const invoices = await sql<InvoicesTable[]>`
+      SELECT
+        invoices.id,
+        invoices.amount,
+        invoices.date,
+        invoices.status,
+        customers.name,
+        customers.email,
+        customers.image_url
+      FROM invoices
+      JOIN customers ON invoices.customer_id = customers.id
+      WHERE invoices.status = ${status}  -- Filter invoices by status
+      ORDER BY invoices.date DESC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return invoices;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoices by status.');
+  }
+}
+
 
 export async function fetchInvoicesPages(query: string) {
   try {

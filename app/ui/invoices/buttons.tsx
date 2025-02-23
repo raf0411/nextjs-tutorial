@@ -64,7 +64,7 @@ export function DeleteInvoice({ id }: { id: string }) {
           background: 'red',
         }}
       >
-        <TrashIcon className="w-4" color='white'/>
+        <TrashIcon className="w-5" color='white'/>
       </IconButton>
     </form>
   );
